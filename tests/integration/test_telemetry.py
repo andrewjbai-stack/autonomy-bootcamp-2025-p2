@@ -47,21 +47,29 @@ def start_drone() -> None:
 #                            ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
 # =================================================================================================
 def stop(
-    args,  # Add any necessary arguments
+    controller: worker_controller.WorkerController  # Add any necessary arguments
 ) -> None:
     """
     Stop the workers.
     """
+    controller.request_exit()
     pass  # Add logic to stop your worker
 
 
 def read_queue(
+    queue: mp.Queue, 
     args,  # Add any necessary arguments
     main_logger: logger.Logger,
 ) -> None:
     """
     Read and print the output queue.
     """
+    while True:
+        try:
+            msg = queue.get(timeout=1)
+            main_logger.info(msg)
+        except:
+            break
     pass  # Add logic to read from your worker's output queue and print it using the logger
 
 
@@ -111,11 +119,13 @@ def main() -> int:
     # =============================================================================================
     # Mock starting a worker, since cannot actually start a new process
     # Create a worker controller for your worker
-
+    controller = worker_controller.WorkerController()
     # Create a multiprocess manager for synchronized queues
-
+    manager = mp.Manager()
     # Create your queues
+    output_queue = mp.Queue()
 
+    args = (controller)
     # Just set a timer to stop the worker after a while, since the worker infinite loops
     threading.Timer(TELEMETRY_PERIOD * NUM_TRIALS * 2 + NUM_FAILS, stop, (args,)).start()
 
@@ -124,6 +134,9 @@ def main() -> int:
 
     telemetry_worker.telemetry_worker(
         # Put your own arguments here
+        connection=connection,
+        controller=controller,
+        output_queue=output_queue
     )
     # =============================================================================================
     #                          ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑

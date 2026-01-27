@@ -21,12 +21,13 @@ class HeartbeatReceiver:
     def create(
         cls,
         connection: mavutil.mavfile,
-        args,  # Put your own arguments here
-        local_logger: logger.Logger,
+        local_logger: logger.Logger,  # Put your own arguments here
+
     ):
         """
         Falliable create (instantiation) method to create a HeartbeatReceiver object.
         """
+        return cls(cls.__private_key, connection, local_logger)
         pass  # Create a HeartbeatReceiver object
 
     def __init__(
@@ -38,16 +39,18 @@ class HeartbeatReceiver:
         assert key is HeartbeatReceiver.__private_key, "Use create() method"
 
         # Do any intializiation here
+        self.connection = connection
 
     def run(
-        self,
-        args,  # Put your own arguments here
+        self  # Put your own arguments here
     ):
         """
         Attempt to recieve a heartbeat message.
         If disconnected for over a threshold number of periods,
         the connection is considered disconnected.
         """
+        message = self.connection.recv_match(type='HEARTBEAT',blocking=True,timeout=1)
+        return message
         pass
 
 

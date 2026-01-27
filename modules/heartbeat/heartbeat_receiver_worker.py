@@ -16,9 +16,12 @@ from ..common.modules.logger import logger
 # =================================================================================================
 #                            ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
 # =================================================================================================
+import time
+
 def heartbeat_receiver_worker(
     connection: mavutil.mavfile,
-    args,  # Place your own arguments here
+    controller: worker_controller.WorkerController,
+    output_queue  # Place your own arguments here
     # Add other necessary worker arguments here
 ) -> None:
     """
@@ -47,8 +50,22 @@ def heartbeat_receiver_worker(
     #                          ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
     # =============================================================================================
     # Instantiate class object (heartbeat_receiver.HeartbeatReceiver)
-
+    HBReciever = heartbeat_receiver.HeartbeatReceiver.create(connection, local_logger=local_logger)
     # Main loop: do work.
+    numMissed = 0
+    while not controller.is_exit_requested():
+        message = HBReciever.run()
+        if message is not None:
+            numMissed = 0
+        elif message is None:
+            numMissed += 1
+            local_logger.error("Heartbeat from Drone Missed!!!")
+
+        if numMissed >= 5:
+            output_queue.put("Disconnected")
+        else: 
+            output_queue.put("Connected")
+        time.sleep(1)
 
 
 # =================================================================================================
