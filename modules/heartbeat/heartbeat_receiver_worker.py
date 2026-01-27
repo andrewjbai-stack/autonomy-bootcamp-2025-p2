@@ -4,6 +4,7 @@ Heartbeat worker that sends heartbeats periodically.
 
 import os
 import pathlib
+import time  ### ADDED THIS MYSELF
 
 from pymavlink import mavutil
 
@@ -16,12 +17,12 @@ from ..common.modules.logger import logger
 # =================================================================================================
 #                            ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
 # =================================================================================================
-import time
+
 
 def heartbeat_receiver_worker(
     connection: mavutil.mavfile,
     controller: worker_controller.WorkerController,
-    output_queue  # Place your own arguments here
+    output_queue: queue_proxy_wrapper.queue,  # Place your own arguments here
     # Add other necessary worker arguments here
 ) -> None:
     """
@@ -50,21 +51,21 @@ def heartbeat_receiver_worker(
     #                          ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
     # =============================================================================================
     # Instantiate class object (heartbeat_receiver.HeartbeatReceiver)
-    HBReciever = heartbeat_receiver.HeartbeatReceiver.create(connection, local_logger=local_logger)
+    hb_receiver = heartbeat_receiver.HeartbeatReceiver.create(connection)
     # Main loop: do work.
-    numMissed = 0
+    num_missed = 0
     while not controller.is_exit_requested():
-        message = HBReciever.run()
+        message = hb_receiver.run()
         if message is not None:
-            numMissed = 0
+            num_missed = 0
         elif message is None:
-            numMissed += 1
-            local_logger.error("Heartbeat from Drone Missed!!!")
+            num_missed += 1
+            local_logger.error(f"Heartbeat from Drone Missed!!!{num_missed}")
 
-        if numMissed >= 5:
+        if num_missed >= 5:
             output_queue.put("Disconnected")
-        else: 
-            output_queue.put("Connected")
+            break
+        output_queue.put("Connected")
         time.sleep(1)
 
 

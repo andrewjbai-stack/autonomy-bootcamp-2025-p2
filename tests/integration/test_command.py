@@ -16,7 +16,7 @@ from modules.common.modules.logger import logger
 from modules.common.modules.logger import logger_main_setup
 from modules.common.modules.read_yaml import read_yaml
 from modules.telemetry import telemetry
-from utilities.workers import queue_proxy_wrapper
+from utilities.workers import queue_proxy_wrapper  # pylint: disable=unused-import
 from utilities.workers import worker_controller
 
 
@@ -54,15 +54,13 @@ def start_drone() -> None:
 #                            ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
 # =================================================================================================
 def stop(
-    controller: worker_controller.WorkerController,
-    queue: mp.Queue  # Add any necessary arguments
+    controller: worker_controller.WorkerController, queue: mp.Queue  # Add any necessary arguments
 ) -> None:
     """
     Stop the workers.
     """
     controller.request_exit()
     queue.put("DONE")
-    pass  # Add logic to stop your worker
 
 
 def read_queue(
@@ -73,21 +71,21 @@ def read_queue(
     Read and print the output queue.
     """
     while True:
-        try: 
+        try:
             msg = queue.get(timeout=1)
-            
+
             if msg == "DONE":
                 break
-            
+
             if msg is not None:
                 main_logger.info(msg)
-                
-        except Exception:
+
+        except queue.empty:
             continue
 
 
 def put_queue(
-    flight_info,
+    flight_info: list[telemetry.Telemetry],
     queue: mp.Queue,
     # Add any necessary arguments
 ) -> None:
@@ -98,8 +96,6 @@ def put_queue(
     for info in flight_info:
         queue.put(info)
         time.sleep(TELEMETRY_PERIOD)
-
-    pass  # Add logic to place the mocked inputs into your worker's input queue periodically
 
 
 # =================================================================================================
@@ -239,10 +235,17 @@ def main() -> int:
     ]
 
     # Just set a timer to stop the worker after a while, since the worker infinite loops
-    threading.Timer(TELEMETRY_PERIOD * len(path), stop, (controller,output_queue,)).start()
+    threading.Timer(
+        TELEMETRY_PERIOD * len(path),
+        stop,
+        (
+            controller,
+            output_queue,
+        ),
+    ).start()
 
     # Put items into input queue
-    threading.Thread(target=put_queue, args=(path,input_queue)).start()
+    threading.Thread(target=put_queue, args=(path, input_queue)).start()
 
     # Read the main queue (worker outputs)
     threading.Thread(target=read_queue, args=(output_queue, main_logger)).start()
@@ -253,7 +256,7 @@ def main() -> int:
         target=TARGET,
         controller=controller,
         input_queue=input_queue,
-        output_queue=output_queue
+        output_queue=output_queue,
     )
     # =============================================================================================
     #                          ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑

@@ -4,6 +4,7 @@ Command worker to make decisions based on Telemetry Data.
 
 import os
 import pathlib
+import queue  ### added this for the queue.empty exception
 
 from pymavlink import mavutil
 
@@ -20,8 +21,8 @@ def command_worker(
     connection: mavutil.mavfile,
     target: command.Position,
     controller: worker_controller.WorkerController,
-    input_queue,
-    output_queue
+    input_queue: queue_proxy_wrapper.queue,
+    output_queue: queue_proxy_wrapper.queue,
     # Place your own arguments here
     # Add other necessary worker arguments here
 ) -> None:
@@ -51,7 +52,9 @@ def command_worker(
     #                          ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
     # =============================================================================================
     # Instantiate class object (command.Command)
-    command_obj = command.Command.create(connection=connection, target=target, local_logger=local_logger)
+    command_obj = command.Command.create(
+        connection=connection, target=target, local_logger=local_logger
+    )
     # Main loop: do work.
     while not controller.is_exit_requested():
         try:
@@ -59,10 +62,9 @@ def command_worker(
             result = command_obj.run(current_data)
             if result is not None:
                 output_queue.put(result)
-        except :
+        except queue.Empty:
             # No data available, check exit flag and continue
             continue
-
 
 
 # =================================================================================================

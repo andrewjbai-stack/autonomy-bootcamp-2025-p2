@@ -77,17 +77,14 @@ class Telemetry:
         cls,
         connection: mavutil.mavfile,  # Put your own arguments here
         local_logger: logger.Logger,
-    ):
+    ) -> Telemetry:  # pylint: disable=undefined-variable
         """
         Falliable create (instantiation) method to create a Telemetry object.
         """
         if connection is not None:
             return cls(cls.__private_key, connection, local_logger=local_logger)
-        else:
-            local_logger.error("Failed to create a Telemetry object due to missing connection")
-            return None
-
-        pass  # Create a Telemetry object
+        local_logger.error("Failed to create a Telemetry object due to missing connection")
+        return None
 
     def __init__(
         self,
@@ -100,10 +97,10 @@ class Telemetry:
         # Do any intializiation here
         self.connection = connection
         self.local_logger = local_logger
-        
+
     def run(
         self,  # Put your own arguments here
-    ):
+    ) -> Telemetry | None:
         """
         Receive LOCAL_POSITION_NED and ATTITUDE messages from the drone,
         combining them together to form a single TelemetryData object.
@@ -113,49 +110,50 @@ class Telemetry:
         # Return the most recent of both, and use the most recent message's timestamp
 
         start_time = time.time()
-        return_Telemetry = TelemetryData()
+        return_telemetry = TelemetryData()
 
         run = True
-        #Bool tuple to check if both attitude and local position data is received
+        # Bool tuple to check if both attitude and local position data is received
         data_received = [False, False]
         while run:
-            #Check to see if time is greater than one
-            if time.time()-start_time >=1:
+            # Check to see if time is greater than one
+            if time.time() - start_time >= 1:
                 return None
 
-            #Attempt to take in attitude data
-            attitude = self.connection.recv_match(type = 'ATTITUDE', timeout=0.0)
+            # Attempt to take in attitude data
+            attitude = self.connection.recv_match(type="ATTITUDE", timeout=0.0)
 
-            #Set telemetry data to corresponding incoming data
+            # Set telemetry data to corresponding incoming data
             if attitude is not None:
                 data_received[0] = True
 
-                return_Telemetry.time_since_boot = attitude.time_boot_ms
-                return_Telemetry.roll = attitude.roll
-                return_Telemetry.pitch = attitude.pitch
-                return_Telemetry.yaw = attitude.yaw
-                return_Telemetry.roll_speed = attitude.rollspeed
-                return_Telemetry.pitch_speed = attitude.pitchspeed
-                return_Telemetry.yaw_speed = attitude.yawspeed
-            
-            #Take in position data
-            local_Position = self.connection.recv_match(type = 'LOCAL_POSITION_NED', timeout=0.0)
-            #Same thing as attitude data intake
-            if local_Position is not None:
+                return_telemetry.time_since_boot = attitude.time_boot_ms
+                return_telemetry.roll = attitude.roll
+                return_telemetry.pitch = attitude.pitch
+                return_telemetry.yaw = attitude.yaw
+                return_telemetry.roll_speed = attitude.rollspeed
+                return_telemetry.pitch_speed = attitude.pitchspeed
+                return_telemetry.yaw_speed = attitude.yawspeed
+
+            # Take in position data
+            local_position = self.connection.recv_match(type="LOCAL_POSITION_NED", timeout=0.0)
+            # Same thing as attitude data intake
+            if local_position is not None:
                 data_received[1] = True
 
-                return_Telemetry.time_since_boot = local_Position.time_boot_ms
-                return_Telemetry.x = local_Position.x
-                return_Telemetry.y = local_Position.y
-                return_Telemetry.z = local_Position.z
-                return_Telemetry.x_velocity = local_Position.vx
-                return_Telemetry.y_velocity = local_Position.vy
-                return_Telemetry.z_velocity = local_Position.vz
-            
-            
-            #If both data types have been received, return the data to worker
+                return_telemetry.time_since_boot = local_position.time_boot_ms
+                return_telemetry.x = local_position.x
+                return_telemetry.y = local_position.y
+                return_telemetry.z = local_position.z
+                return_telemetry.x_velocity = local_position.vx
+                return_telemetry.y_velocity = local_position.vy
+                return_telemetry.z_velocity = local_position.vz
+
+            # If both data types have been received, return the data to worker
             if all(data_received):
-                return return_Telemetry
+                return return_telemetry
+        return None
+
 
 # =================================================================================================
 #                            ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑

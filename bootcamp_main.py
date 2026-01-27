@@ -13,7 +13,8 @@ from pymavlink import mavutil
 from modules.common.modules.logger import logger
 from modules.common.modules.logger import logger_main_setup
 from modules.common.modules.read_yaml import read_yaml
-from modules.command import command
+
+# from modules.command import command ### didnt use it and pylint was getting mad
 from modules.command import command_worker
 from modules.heartbeat import heartbeat_receiver_worker
 from modules.heartbeat import heartbeat_sender_worker
@@ -36,10 +37,10 @@ TELEMETRY_TO_COMMAND_QUEUE_SIZE = 5
 COMMAND_TO_MAIN_QUEUE_SIZE = 5
 
 # Set worker counts
-heartbeat_sender_count = 1
-heartbeat_receiver_count = 1
-telemetry_count = 1
-command_count = 1
+HEARTBEAT_SENDER_COUNT = 1
+HEARTBEAT_RECEIVER_COUNT = 1
+TELEMETRY_COUNT = 1
+COMMAND_COUNT = 1
 # Any other constants
 
 # =================================================================================================
@@ -88,18 +89,15 @@ def main() -> int:
 
     ###Here im creating queues under the main mp_manager. All with the sizes stored in the constants above
     heartbeat_to_main_queue = queue_proxy_wrapper.QueueProxyWrapper(
-        mp_manager,
-        HEARTBEAT_TO_MAIN_QUEUE_SIZE
+        mp_manager, HEARTBEAT_TO_MAIN_QUEUE_SIZE
     )
 
     telemetry_to_command_queue = queue_proxy_wrapper.QueueProxyWrapper(
-        mp_manager,
-        TELEMETRY_TO_COMMAND_QUEUE_SIZE
+        mp_manager, TELEMETRY_TO_COMMAND_QUEUE_SIZE
     )
 
     command_to_main_queue = queue_proxy_wrapper.QueueProxyWrapper(
-        mp_manager,
-        COMMAND_TO_MAIN_QUEUE_SIZE
+        mp_manager, COMMAND_TO_MAIN_QUEUE_SIZE
     )
 
     # Create worker properties for each worker type (what inputs it takes, how many workers)
@@ -107,11 +105,11 @@ def main() -> int:
 
     ### Here i copied the one from the example and put it in here
     result, heartbeat_sender_properties = worker_manager.WorkerProperties.create(
-        count=heartbeat_sender_count,  # How many workers
+        count=HEARTBEAT_SENDER_COUNT,  # How many workers
         target=heartbeat_sender_worker.heartbeat_sender_worker,  # What's the function that this worker runs
         work_arguments=(  # The function's arguments excluding input/output queues and controller
-            connection, 
-            controller
+            connection,
+            controller,
         ),
         input_queues=[],  # Note that input/output queues must be in the proper order
         output_queues=[],
@@ -126,13 +124,13 @@ def main() -> int:
     assert heartbeat_sender_properties is not None
 
     # Heartbeat receiver----------------
-    result, heartbeat_receiver_properties  = worker_manager.WorkerProperties.create(
-        count=heartbeat_receiver_count,  # How many workers
+    result, heartbeat_receiver_properties = worker_manager.WorkerProperties.create(
+        count=HEARTBEAT_RECEIVER_COUNT,  # How many workers
         target=heartbeat_receiver_worker.heartbeat_receiver_worker,  # What's the function that this worker runs
         work_arguments=(  # The function's arguments excluding input/output queues and controller
             connection,
             controller,
-            heartbeat_to_main_queue
+            heartbeat_to_main_queue,
         ),
         input_queues=[],  # Note that input/output queues must be in the proper order
         output_queues=[heartbeat_to_main_queue],
@@ -147,13 +145,13 @@ def main() -> int:
     assert heartbeat_receiver_properties is not None
 
     # Telemetry-----------
-    result, telemetry_properties  = worker_manager.WorkerProperties.create(
-        count=telemetry_count,  # How many workers
+    result, telemetry_properties = worker_manager.WorkerProperties.create(
+        count=TELEMETRY_COUNT,  # How many workers
         target=telemetry_worker.telemetry_worker,  # What's the function that this worker runs
         work_arguments=(  # The function's arguments excluding input/output queues and controller
             connection,
             controller,
-            telemetry_to_command_queue
+            telemetry_to_command_queue,
         ),
         input_queues=[],  # Note that input/output queues must be in the proper order
         output_queues=[telemetry_to_command_queue],
@@ -168,17 +166,19 @@ def main() -> int:
     assert telemetry_properties is not None
 
     # Command------------------
-    result, command_properties  = worker_manager.WorkerProperties.create(
-        count=command_count,  # How many workers
+    result, command_properties = worker_manager.WorkerProperties.create(
+        count=COMMAND_COUNT,  # How many workers
         target=command_worker.command_worker,  # What's the function that this worker runs
         work_arguments=(  # The function's arguments excluding input/output queues and controller
             connection,
-            (0,0,0), ### The target position, i dont know what to put here
+            (0, 0, 0),  ### The target position, i dont know what to put here
             controller,
             telemetry_to_command_queue,
-            command_to_main_queue
+            command_to_main_queue,
         ),
-        input_queues=[telemetry_to_command_queue],  # Note that input/output queues must be in the proper order
+        input_queues=[
+            telemetry_to_command_queue
+        ],  # Note that input/output queues must be in the proper order
         output_queues=[command_to_main_queue],
         controller=controller,  # Worker controller
         local_logger=main_logger,  # Main logger to log any failures during worker creation
@@ -263,29 +263,27 @@ def main() -> int:
 
     time_start = time.time()
     continue_running = True
-    while time.time()-time_start < 100 and continue_running:
+    while time.time() - time_start < 100 and continue_running:
         msg = None
         ### Constantly read from command_to_main queue, with error handling
         try:
             msg = command_to_main_queue.get(timeout=0.1)
-        except: 
+        except queue.Empty:
             continue
 
-        ### If a message was read from the queue log it. 
+        ### If a message was read from the queue log it.
         if msg is not None:
             main_logger.info(msg)
-        
+
         ### Do the same thing for the heartbeat receiver queue
         try:
             msg = heartbeat_to_main_queue.get(timeout=0.1)
-        except:
+        except queue.Empty:
             continue
-        
+
         ### if the message is disconnected stop running the main file
         if msg == "Disconnected":
             continue_running = False
-        
-
 
     # Stop the processes
 

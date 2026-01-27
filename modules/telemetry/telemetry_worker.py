@@ -19,7 +19,7 @@ from ..common.modules.logger import logger
 def telemetry_worker(
     connection: mavutil.mavfile,
     controller: worker_controller,
-    output_queue
+    output_queue: queue_proxy_wrapper.queue,
     # Place your own arguments here
     # Add other necessary worker arguments here
 ) -> None:
@@ -58,9 +58,9 @@ def telemetry_worker(
         if current_telemetry_data is not None:
             output_queue.put(current_telemetry_data)
         else:
-            local_logger.error("attitude and position data has been missing for more than one second")
-
-
+            local_logger.error(
+                "attitude and position data has been missing for more than one second"
+            )
 
 
 # =================================================================================================

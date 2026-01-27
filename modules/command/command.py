@@ -38,22 +38,21 @@ class Command:  # pylint: disable=too-many-instance-attributes
         connection: mavutil.mavfile,
         target: Position,  # Put your own arguments here
         local_logger: logger.Logger,
-    ):
+    ) -> (
+        Command
+    ):  # pylint: disable=undefined-variable ### I dont know why its getting mad at me for this
         """
         Falliable create (instantiation) method to create a Command object.
         """
-        return cls(cls.__private_key, 
-                connection = connection, 
-                target = target, 
-                local_logger = local_logger)
-        pass  #  Create a Command object
+        return cls(  # pylint: disable=undefined-variable
+            cls.__private_key, connection=connection, target=target, local_logger=local_logger
+        )
 
     def __init__(
         self,
         key: object,
         connection: mavutil.mavfile,
         target: Position,
-
         # Put your own arguments here
         local_logger: logger.Logger,
     ) -> None:
@@ -63,20 +62,19 @@ class Command:  # pylint: disable=too-many-instance-attributes
         self.connection = connection
         self.target = target
         self.local_logger = local_logger
-        self.numOfRuns = 0
-        self.totalVelocity = 0
+        self.num_of_runs = 0
+        self.total_velocity = 0
 
-    def run(
-        self,
-        telemetry_data: telemetry.TelemetryData  # Put your own arguments here
-    ):
+    def run(self, telemetry_data: telemetry.TelemetryData) -> str:  # Put your own arguments here
         """
         Make a decision based on received telemetry data.
         """
-        self.numOfRuns += 1
-        self.totalVelocity += telemetry_data.z_velocity+telemetry_data.x_velocity+telemetry_data.y_velocity
+        self.num_of_runs += 1
+        self.total_velocity += (
+            telemetry_data.z_velocity + telemetry_data.x_velocity + telemetry_data.y_velocity
+        )
 
-        self.local_logger.info(f"current velocity: {self.totalVelocity/self.numOfRuns}")
+        self.local_logger.info(f"current velocity: {self.total_velocity/self.num_of_runs}")
 
         # Use COMMAND_LONG (76) message, assume the target_system=1 and target_componenet=0
         # The appropriate commands to use are instructed below
@@ -90,36 +88,60 @@ class Command:  # pylint: disable=too-many-instance-attributes
 
         if telemetry_data.z - self.target.z >= 0.5:
             self.local_logger.info("TARGET IS LOWER, GOING DOWN")
-            self.connection.mav.command_long_send(1, 0, mavutil.mavlink.MAV_CMD_CONDITION_CHANGE_ALT, 0, 1.0, 0, 0, 0, 0, 0, self.target.z)
+            self.connection.mav.command_long_send(
+                1,
+                0,
+                mavutil.mavlink.MAV_CMD_CONDITION_CHANGE_ALT,
+                0,
+                1.0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                self.target.z,
+            )
             return f"CHANGE ALTITUDE: {self.target.z-telemetry_data.z}"
-        elif telemetry_data.z - self.target.z <= -0.5:
+        if telemetry_data.z - self.target.z <= -0.5:
             self.local_logger.info("TARGET IS HIGHER, GOING UP")
 
-            self.connection.mav.command_long_send(1, 0, mavutil.mavlink.MAV_CMD_CONDITION_CHANGE_ALT, 0, 1.0, 0, 0, 0, 0, 0, self.target.z)
+            self.connection.mav.command_long_send(
+                1,
+                0,
+                mavutil.mavlink.MAV_CMD_CONDITION_CHANGE_ALT,
+                0,
+                1.0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                self.target.z,
+            )
             return f"CHANGE ALTITUDE: {self.target.z-telemetry_data.z}"
-        
-        
-        #Calculate bearing to target
+
+        # Calculate bearing to target
         dx = self.target.x - telemetry_data.x
-        dy = self.target.y - telemetry_data.y  
-        bearing_rad = math.atan2(dy, dx)  
+        dy = self.target.y - telemetry_data.y
+        bearing_rad = math.atan2(dy, dx)
         bearing_deg = math.degrees(bearing_rad)
-        
-        #Current yaw in degrees
+
+        # Current yaw in degrees
         current_yaw_deg = math.degrees(telemetry_data.yaw)
-        
-        #Calculate yaw difference
+
+        # Calculate yaw difference
         delta_yaw_deg = bearing_deg - current_yaw_deg
-        
-        #Normalize 
+
+        # Normalize
         delta_yaw_deg = (delta_yaw_deg + 180) % 360 - 180
-        
+
         if abs(delta_yaw_deg) > 5:
             self.local_logger.info("TARGET NOT IN SIGHT, TURNING")
-            self.connection.mav.command_long_send(1, 0, mavutil.mavlink.MAV_CMD_CONDITION_YAW, 0,0, 5.0, 1, 1, 0, 0, 0  )
+            self.connection.mav.command_long_send(
+                1, 0, mavutil.mavlink.MAV_CMD_CONDITION_YAW, 0, 0, 5.0, 1, 1, 0, 0, 0
+            )
             return f"CHANGE YAW: {delta_yaw_deg}"
-        
-        
+        return None
 
 
 # =================================================================================================

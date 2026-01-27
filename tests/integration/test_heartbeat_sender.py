@@ -45,13 +45,12 @@ def start_drone() -> None:
 #                            ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
 # =================================================================================================
 def stop(
-    controller,  # Add any necessary arguments
+    controller: worker_controller.controller,  # Add any necessary arguments
 ) -> None:
     """
     Stop the workers.
     """
     controller.request_exit()
-    pass  # Add logic to stop your worker
 
 
 # =================================================================================================
@@ -102,7 +101,7 @@ def main() -> int:
     heartbeat_sender_worker.heartbeat_sender_worker(
         # Place your own arguments here
         connection,
-        controller
+        controller,
     )
     stop(controller)
     # =============================================================================================

@@ -1,0 +1,58 @@
+13:03:45: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command_worker.py | command_worker | 49] Logger initialized
+13:03:45: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 4.0
+13:03:45: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 106] TARGET IS HIGHER, GOING UP
+13:03:46: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 1.0
+13:03:46: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 90] TARGET IS LOWER, GOING DOWN
+13:03:46: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 0.6666666666666666
+13:03:47: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 0.5
+13:03:47: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 0.4
+13:03:48: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 0.3333333333333333
+13:03:48: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 0.2857142857142857
+13:03:49: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 2.75
+13:03:49: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:49: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 4.666666666666667
+13:03:49: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:50: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 6.2
+13:03:50: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:50: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 7.454545454545454
+13:03:50: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:51: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 8.5
+13:03:51: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:51: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 9.384615384615385
+13:03:51: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:52: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 7.285714285714286
+13:03:52: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:52: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 5.466666666666667
+13:03:52: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:53: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 3.875
+13:03:53: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:53: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 2.4705882352941178
+13:03:53: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:54: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 1.2222222222222223
+13:03:54: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:54: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 0.10526315789473684
+13:03:54: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:55: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 1.1
+13:03:55: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:55: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 2.0
+13:03:55: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:56: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 2.8181818181818183
+13:03:56: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:56: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 3.5652173913043477
+13:03:56: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:57: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 4.25
+13:03:57: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:57: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 4.88
+13:03:57: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:58: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 3.923076923076923
+13:03:58: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:58: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 3.037037037037037
+13:03:58: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:59: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 2.2142857142857144
+13:03:59: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:03:59: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 1.4482758620689655
+13:03:59: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:04:00: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 0.7333333333333333
+13:04:00: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
+13:04:00: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 77] current velocity: 0.06451612903225806
+13:04:00: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\command\command.py | run | 139] TARGET NOT IN SIGHT, TURNING
