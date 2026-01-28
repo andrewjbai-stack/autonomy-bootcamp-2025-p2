@@ -38,13 +38,14 @@ class Command:  # pylint: disable=too-many-instance-attributes
         connection: mavutil.mavfile,
         target: Position,  # Put your own arguments here
         local_logger: logger.Logger,
-    ) -> (
-        Command
-    ):  # pylint: disable=undefined-variable ### I dont know why its getting mad at me for this
+    ) -> tuple[
+        bool,
+        Command,  # pylint: disable=undefined-variable ### I dont know why its getting mad at me for this
+    ]:
         """
         Falliable create (instantiation) method to create a Command object.
         """
-        return cls(  # pylint: disable=undefined-variable
+        return True, cls(  # pylint: disable=undefined-variable
             cls.__private_key, connection=connection, target=target, local_logger=local_logger
         )
 
@@ -70,11 +71,15 @@ class Command:  # pylint: disable=too-many-instance-attributes
         Make a decision based on received telemetry data.
         """
         self.num_of_runs += 1
-        self.total_velocity += (
-            telemetry_data.z_velocity + telemetry_data.x_velocity + telemetry_data.y_velocity
+        self.total_velocity = Position(
+            telemetry_data.x_velocity / self.num_of_runs,
+            telemetry_data.y_velocity / self.num_of_runs,
+            telemetry_data.z_velocity / self.num_of_runs,
         )
 
-        self.local_logger.info(f"current velocity: {self.total_velocity/self.num_of_runs}")
+        self.local_logger.info(
+            f"current velocity: ({self.total_velocity.x}, {self.total_velocity.y}, {self.total_velocity.z})"
+        )
 
         # Use COMMAND_LONG (76) message, assume the target_system=1 and target_componenet=0
         # The appropriate commands to use are instructed below
@@ -85,26 +90,9 @@ class Command:  # pylint: disable=too-many-instance-attributes
         # Adjust direction (yaw) using MAV_CMD_CONDITION_YAW (115). Must use relative angle to current state
         # String to return to main: "CHANGING_YAW: {degree you changed it by in range [-180, 180]}"
         # Positive angle is counter-clockwise as in a right handed system
-
-        if telemetry_data.z - self.target.z >= 0.5:
-            self.local_logger.info("TARGET IS LOWER, GOING DOWN")
-            self.connection.mav.command_long_send(
-                1,
-                0,
-                mavutil.mavlink.MAV_CMD_CONDITION_CHANGE_ALT,
-                0,
-                1.0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                self.target.z,
-            )
-            return f"CHANGE ALTITUDE: {self.target.z-telemetry_data.z}"
-        if telemetry_data.z - self.target.z <= -0.5:
-            self.local_logger.info("TARGET IS HIGHER, GOING UP")
-
+        dz = telemetry_data.z - self.target.z
+        if telemetry_data.z - self.target.z >= 0.5 or telemetry_data.z - self.target.z <= -0.5:
+            self.local_logger.info(f"TARGET Z IS OFF, MOVING {dz} METERS")
             self.connection.mav.command_long_send(
                 1,
                 0,
@@ -138,7 +126,17 @@ class Command:  # pylint: disable=too-many-instance-attributes
         if abs(delta_yaw_deg) > 5:
             self.local_logger.info("TARGET NOT IN SIGHT, TURNING")
             self.connection.mav.command_long_send(
-                1, 0, mavutil.mavlink.MAV_CMD_CONDITION_YAW, 0, 0, 5.0, 1, 1, 0, 0, 0
+                1,
+                0,
+                mavutil.mavlink.MAV_CMD_CONDITION_YAW,
+                0,
+                abs(delta_yaw_deg),
+                5.0,
+                1 if delta_yaw_deg >= 0 else -1,
+                1,
+                0,
+                0,
+                0,
             )
             return f"CHANGE YAW: {delta_yaw_deg}"
         return None

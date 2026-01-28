@@ -50,8 +50,9 @@ def heartbeat_sender_worker(
     connection_created, hb_sender = heartbeat_sender.HeartbeatSender.create(connection)
     if connection_created is False:
         local_logger.error("ERROR: No connection found")
-    elif connection_created is True:
-        local_logger.info("Heartbeat sender connection established")
+        controller.request_exit()
+
+    local_logger.info("Heartbeat sender connection established")
 
     # Main loop: do work.
     if connection_created is True:

@@ -7,6 +7,7 @@ import multiprocessing as mp
 import subprocess
 import threading
 import time
+import queue  ### IMPORTED BY ME
 
 from pymavlink import mavutil
 
@@ -54,39 +55,37 @@ def start_drone() -> None:
 #                            ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
 # =================================================================================================
 def stop(
-    controller: worker_controller.WorkerController, queue: mp.Queue  # Add any necessary arguments
+    controller: worker_controller.WorkerController, local_queue: mp.Queue  # Add any necessary arguments
 ) -> None:
     """
     Stop the workers.
     """
     controller.request_exit()
-    queue.put("DONE")
+    local_queue.put("DONE")
 
 
 def read_queue(
-    queue: mp.Queue,  # Add any necessary arguments
+    input_queue: mp.Queue,  # Add any necessary arguments
     main_logger: logger.Logger,
+    controller: worker_controller.WorkerController,
 ) -> None:
     """
     Read and print the output queue.
     """
-    while True:
+    while not controller.is_exit_requested():
         try:
-            msg = queue.get(timeout=1)
-
-            if msg == "DONE":
-                break
+            msg = input_queue.get(timeout=1)
 
             if msg is not None:
                 main_logger.info(msg)
 
-        except queue.empty:
+        except queue.Empty:
             continue
 
 
 def put_queue(
     flight_info: list[telemetry.Telemetry],
-    queue: mp.Queue,
+    local_queue: mp.Queue,
     # Add any necessary arguments
 ) -> None:
     """
@@ -94,7 +93,7 @@ def put_queue(
     """
 
     for info in flight_info:
-        queue.put(info)
+        local_queue.put(info)
         time.sleep(TELEMETRY_PERIOD)
 
 
@@ -248,7 +247,7 @@ def main() -> int:
     threading.Thread(target=put_queue, args=(path, input_queue)).start()
 
     # Read the main queue (worker outputs)
-    threading.Thread(target=read_queue, args=(output_queue, main_logger)).start()
+    threading.Thread(target=read_queue, args=(output_queue, main_logger, controller)).start()
 
     command_worker.command_worker(
         # Place your own arguments here

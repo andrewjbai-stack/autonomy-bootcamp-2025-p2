@@ -49,7 +49,7 @@ def telemetry_worker(
     #                          ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
     # =============================================================================================
     # Instantiate class object (telemetry.Telemetry)
-    telemetry_obj = telemetry.Telemetry.create(connection=connection, local_logger=local_logger)
+    _, telemetry_obj = telemetry.Telemetry.create(connection=connection, local_logger=local_logger)
     # Main loop: do work.
 
     while not controller.is_exit_requested():

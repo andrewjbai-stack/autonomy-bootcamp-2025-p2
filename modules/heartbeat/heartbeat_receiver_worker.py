@@ -51,21 +51,18 @@ def heartbeat_receiver_worker(
     #                          ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
     # =============================================================================================
     # Instantiate class object (heartbeat_receiver.HeartbeatReceiver)
-    hb_receiver = heartbeat_receiver.HeartbeatReceiver.create(connection)
+    _, hb_receiver = heartbeat_receiver.HeartbeatReceiver.create(connection)
     # Main loop: do work.
     num_missed = 0
     while not controller.is_exit_requested():
         message = hb_receiver.run()
         if message is not None:
-            num_missed = 0
+            output_queue.put("Connected")
         elif message is None:
-            num_missed += 1
-            local_logger.error(f"Heartbeat from Drone Missed!!!{num_missed}")
-
-        if num_missed >= 5:
             output_queue.put("Disconnected")
-            break
-        output_queue.put("Connected")
+
+            num_missed += 1
+            local_logger.error(f"{num_missed} Heartbeats from Drone Missed!!!")
         time.sleep(1)
 
 

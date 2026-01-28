@@ -51,29 +51,26 @@ def start_drone() -> None:
 # =================================================================================================
 
 
-def stop(
-    controller: worker_controller.WorkerController,
-) -> None:
+def stop(controller: worker_controller.WorkerController, local_logger: logger.Logger) -> None:
     """
     Stop the workers.
     """
     controller.request_exit()
-    logger.info("Worker Exiting")
+    local_logger.info("Worker Exiting")
 
 
 def read_queue(
     input_queue: mp.Queue,  # Add any necessary arguments
-    main_logger: logger.Logger,
+    local_logger: logger.Logger,
+    controller: worker_controller.WorkerController,
 ) -> None:
     """
     Read and print the output queue.
     """
-    while True:
+    while not controller.is_exit_requested():
         try:
-            msg = input_queue.get(timeout=1)
-            main_logger.info(msg)
-            if msg == "Disconnected":
-                break
+            msg = input_queue.get(timeout=0.1)
+            local_logger.info(msg)
         except queue.Empty:
             continue
 
@@ -131,17 +128,15 @@ def main() -> int:
     # Create your queues
     input_queue = manager.Queue()
 
-    args = controller
-
     # Just set a timer to stop the worker after a while, since the worker infinite loops
     threading.Timer(
         HEARTBEAT_PERIOD * (NUM_TRIALS * 2 + DISCONNECT_THRESHOLD + NUM_DISCONNECTS + 2),
         stop,
-        args=(controller, args),
+        args=(controller, main_logger),
     ).start()
 
     # Read the main queue (worker outputs)
-    threading.Thread(target=read_queue, args=(input_queue, main_logger)).start()
+    threading.Thread(target=read_queue, args=(input_queue, main_logger, controller)).start()
 
     heartbeat_receiver_worker.heartbeat_receiver_worker(
         # Place your own arguments here

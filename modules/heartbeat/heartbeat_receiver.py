@@ -20,11 +20,11 @@ class HeartbeatReceiver:
     @classmethod
     def create(
         cls, connection: mavutil.mavfile
-    ) -> HeartbeatReceiver:  # pylint: disable=undefined-variable
+    ) -> tuple[bool, HeartbeatReceiver]:  # pylint: disable=undefined-variable
         """
         Falliable create (instantiation) method to create a HeartbeatReceiver object.
         """
-        return cls(cls.__private_key, connection)
+        return True, cls(cls.__private_key, connection)
 
     def __init__(
         self,

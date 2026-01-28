@@ -52,13 +52,13 @@ def command_worker(
     #                          ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
     # =============================================================================================
     # Instantiate class object (command.Command)
-    command_obj = command.Command.create(
+    _, command_obj = command.Command.create(
         connection=connection, target=target, local_logger=local_logger
     )
     # Main loop: do work.
     while not controller.is_exit_requested():
         try:
-            current_data = input_queue.get(timeout=0.1)  # Add timeout!
+            current_data = input_queue.get(timeout=1)
             result = command_obj.run(current_data)
             if result is not None:
                 output_queue.put(result)

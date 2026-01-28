@@ -77,14 +77,14 @@ class Telemetry:
         cls,
         connection: mavutil.mavfile,  # Put your own arguments here
         local_logger: logger.Logger,
-    ) -> Telemetry:  # pylint: disable=undefined-variable
+    ) -> tuple[bool, Telemetry]:  # pylint: disable=undefined-variable
         """
         Falliable create (instantiation) method to create a Telemetry object.
         """
         if connection is not None:
-            return cls(cls.__private_key, connection, local_logger=local_logger)
+            return True, cls(cls.__private_key, connection, local_logger=local_logger)
         local_logger.error("Failed to create a Telemetry object due to missing connection")
-        return None
+        return False, None
 
     def __init__(
         self,
@@ -112,13 +112,11 @@ class Telemetry:
         start_time = time.time()
         return_telemetry = TelemetryData()
 
-        run = True
         # Bool tuple to check if both attitude and local position data is received
         data_received = [False, False]
-        while run:
-            # Check to see if time is greater than one
-            if time.time() - start_time >= 1:
-                return None
+
+        ### Run until time is greater than one
+        while time.time() - start_time <= 1:
 
             # Attempt to take in attitude data
             attitude = self.connection.recv_match(type="ATTITUDE", timeout=0.0)
