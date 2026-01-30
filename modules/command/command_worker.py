@@ -20,9 +20,9 @@ from ..common.modules.logger import logger
 def command_worker(
     connection: mavutil.mavfile,
     target: command.Position,
-    controller: worker_controller.WorkerController,
     input_queue: queue_proxy_wrapper.queue,
     output_queue: queue_proxy_wrapper.queue,
+    controller: worker_controller.WorkerController,
     # Place your own arguments here
     # Add other necessary worker arguments here
 ) -> None:
@@ -56,7 +56,7 @@ def command_worker(
         connection=connection, target=target, local_logger=local_logger
     )
     if not is_created:
-        local_logger.info("command worker was not created succesfully")
+        local_logger.error("command worker was not created succesfully")
         controller.request_exit()
         return
 

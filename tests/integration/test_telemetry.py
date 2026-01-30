@@ -5,7 +5,6 @@ Test the telemetry worker with a mocked drone.
 import multiprocessing as mp
 import subprocess
 import threading
-import queue
 
 from pymavlink import mavutil
 
@@ -13,7 +12,7 @@ from modules.common.modules.logger import logger
 from modules.common.modules.logger import logger_main_setup
 from modules.common.modules.read_yaml import read_yaml
 from modules.telemetry import telemetry_worker
-from utilities.workers import queue_proxy_wrapper  # pylint: disable=unused-import
+from utilities.workers import queue_proxy_wrapper
 from utilities.workers import worker_controller
 
 
@@ -66,7 +65,7 @@ def read_queue(
         try:
             msg = input_queue.get(timeout=1)
             main_logger.info(msg)
-        except queue.Empty:
+        except queue_proxy_wrapper.queue.Empty:
             continue
 
 

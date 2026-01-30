@@ -100,8 +100,8 @@ def main() -> int:
 
     heartbeat_sender_worker.heartbeat_sender_worker(
         # Place your own arguments here
-        connection,
-        controller,
+        controller=controller,
+        connection=connection,
     )
     # =============================================================================================
     #                          ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑

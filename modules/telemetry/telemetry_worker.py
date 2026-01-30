@@ -18,8 +18,8 @@ from ..common.modules.logger import logger
 # =================================================================================================
 def telemetry_worker(
     connection: mavutil.mavfile,
-    controller: worker_controller,
     output_queue: queue_proxy_wrapper.queue,
+    controller: worker_controller,
     # Place your own arguments here
     # Add other necessary worker arguments here
 ) -> None:

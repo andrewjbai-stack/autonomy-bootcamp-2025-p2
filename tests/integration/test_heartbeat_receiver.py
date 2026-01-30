@@ -5,7 +5,6 @@ Test the heartbeat reciever worker with a mocked drone.
 import multiprocessing as mp
 import subprocess
 import threading
-import queue
 
 from pymavlink import mavutil
 
@@ -13,7 +12,7 @@ from modules.common.modules.logger import logger
 from modules.common.modules.logger import logger_main_setup
 from modules.common.modules.read_yaml import read_yaml
 from modules.heartbeat import heartbeat_receiver_worker
-from utilities.workers import queue_proxy_wrapper  # pylint: disable=unused-import
+from utilities.workers import queue_proxy_wrapper
 from utilities.workers import worker_controller
 
 
@@ -71,7 +70,7 @@ def read_queue(
         try:
             msg = input_queue.get(timeout=0.1)
             local_logger.info(msg)
-        except queue.Empty:
+        except queue_proxy_wrapper.queue.Empty:
             continue
 
 
@@ -126,7 +125,7 @@ def main() -> int:
     # Create a multiprocess manager for synchronized queues
     manager = mp.Manager()
     # Create your queues
-    input_queue = manager.Queue()
+    output_queue = manager.Queue()
 
     # Just set a timer to stop the worker after a while, since the worker infinite loops
     threading.Timer(
@@ -136,13 +135,13 @@ def main() -> int:
     ).start()
 
     # Read the main queue (worker outputs)
-    threading.Thread(target=read_queue, args=(input_queue, main_logger, controller)).start()
+    threading.Thread(target=read_queue, args=(output_queue, main_logger, controller)).start()
 
     heartbeat_receiver_worker.heartbeat_receiver_worker(
         # Place your own arguments here
-        connection,
-        controller,
-        input_queue,
+        connection=connection,
+        output_queue=output_queue,
+        controller=controller,
     )
     # =============================================================================================
     #                          ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑

@@ -21,9 +21,8 @@ from ..common.modules.logger import logger
 
 def heartbeat_receiver_worker(
     connection: mavutil.mavfile,
+    output_queue: queue_proxy_wrapper.queue,
     controller: worker_controller.WorkerController,
-    output_queue: queue_proxy_wrapper.queue,  # Place your own arguments here
-    # Add other necessary worker arguments here
 ) -> None:
     """
     Worker process.

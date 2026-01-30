@@ -76,14 +76,9 @@ class Command:  # pylint: disable=too-many-instance-attributes
         self.total_velocity.y += telemetry_data.y_velocity
         self.total_velocity.z += telemetry_data.z_velocity
 
-        self.local_logger.info(
-            f"current velocity: ({self.total_velocity.x/self.num_of_runs}, {self.total_velocity.y/self.num_of_runs}, {self.total_velocity.z/self.num_of_runs})"
-        )
-
         # Checking vertical (z) difference
         dz = telemetry_data.z - self.target.z
         if dz >= 0.5 or dz <= -0.5:
-            self.local_logger.info(f"TARGET Z IS OFF, MOVING {dz} METERS")
             self.connection.mav.command_long_send(
                 1,
                 0,
@@ -115,7 +110,6 @@ class Command:  # pylint: disable=too-many-instance-attributes
         delta_yaw_deg = (delta_yaw_deg + 180) % 360 - 180
 
         if abs(delta_yaw_deg) > 5:
-            self.local_logger.info("TARGET NOT IN SIGHT, TURNING")
             self.connection.mav.command_long_send(
                 1,
                 0,
@@ -130,6 +124,7 @@ class Command:  # pylint: disable=too-many-instance-attributes
                 0,
             )
             return f"CHANGE YAW: {delta_yaw_deg}"
+
         return None
 
 

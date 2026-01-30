@@ -109,7 +109,6 @@ def main() -> int:
         target=heartbeat_sender_worker.heartbeat_sender_worker,  # What's the function that this worker runs
         work_arguments=(  # The function's arguments excluding input/output queues and controller
             connection,
-            controller,
         ),
         input_queues=[],  # Note that input/output queues must be in the proper order
         output_queues=[],
@@ -129,8 +128,6 @@ def main() -> int:
         target=heartbeat_receiver_worker.heartbeat_receiver_worker,  # What's the function that this worker runs
         work_arguments=(  # The function's arguments excluding input/output queues and controller
             connection,
-            controller,
-            heartbeat_to_main_queue,
         ),
         input_queues=[],  # Note that input/output queues must be in the proper order
         output_queues=[heartbeat_to_main_queue],
@@ -150,8 +147,6 @@ def main() -> int:
         target=telemetry_worker.telemetry_worker,  # What's the function that this worker runs
         work_arguments=(  # The function's arguments excluding input/output queues and controller
             connection,
-            controller,
-            telemetry_to_command_queue,
         ),
         input_queues=[],  # Note that input/output queues must be in the proper order
         output_queues=[telemetry_to_command_queue],
@@ -172,9 +167,6 @@ def main() -> int:
         work_arguments=(  # The function's arguments excluding input/output queues and controller
             connection,
             (0, 0, 0),  ### The target position, i dont know what to put here
-            controller,
-            telemetry_to_command_queue,
-            command_to_main_queue,
         ),
         input_queues=[
             telemetry_to_command_queue
