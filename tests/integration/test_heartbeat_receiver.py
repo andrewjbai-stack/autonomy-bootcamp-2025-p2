@@ -59,7 +59,7 @@ def stop(controller: worker_controller.WorkerController, local_logger: logger.Lo
 
 
 def read_queue(
-    input_queue: mp.Queue,  # Add any necessary arguments
+    input_queue: queue_proxy_wrapper.QueueProxyWrapper,  # Add any necessary arguments
     local_logger: logger.Logger,
     controller: worker_controller.WorkerController,
 ) -> None:
@@ -68,7 +68,7 @@ def read_queue(
     """
     while not controller.is_exit_requested():
         try:
-            msg = input_queue.get(timeout=0.1)
+            msg = input_queue.queue.get(timeout=0.1)
             local_logger.info(msg)
         except queue_proxy_wrapper.queue.Empty:
             continue
@@ -125,7 +125,7 @@ def main() -> int:
     # Create a multiprocess manager for synchronized queues
     manager = mp.Manager()
     # Create your queues
-    output_queue = manager.Queue()
+    output_queue = queue_proxy_wrapper.QueueProxyWrapper(manager)
 
     # Just set a timer to stop the worker after a while, since the worker infinite loops
     threading.Timer(

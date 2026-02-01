@@ -65,7 +65,7 @@ def stop(
 
 
 def read_queue(
-    input_queue: mp.Queue,
+    input_queue: queue_proxy_wrapper.QueueProxyWrapper,
     main_logger: logger.Logger,
     controller: worker_controller.WorkerController,
 ) -> None:
@@ -74,7 +74,7 @@ def read_queue(
     """
     while not controller.is_exit_requested():
         try:
-            msg = input_queue.get(timeout=1)
+            msg = input_queue.queue.get(timeout=1)
 
             if msg is not None:
                 main_logger.info(msg)
@@ -85,7 +85,7 @@ def read_queue(
 
 def put_queue(
     flight_info: list[telemetry.Telemetry],
-    local_queue: mp.Queue,
+    local_queue: queue_proxy_wrapper.QueueProxyWrapper,
     # Add any necessary arguments
 ) -> None:
     """
@@ -93,7 +93,7 @@ def put_queue(
     """
 
     for info in flight_info:
-        local_queue.put(info)
+        local_queue.queue.put(info)
         time.sleep(TELEMETRY_PERIOD)
 
 
@@ -147,8 +147,8 @@ def main() -> int:
     # Create a multiprocess manager for synchronized queues
     manager = mp.Manager()
     # Create your queues
-    input_queue = manager.Queue()
-    output_queue = manager.Queue()
+    input_queue = queue_proxy_wrapper.QueueProxyWrapper(manager)
+    output_queue = queue_proxy_wrapper.QueueProxyWrapper(manager)
     # Test cases, DO NOT EDIT!
     path = [
         # Test singular points
