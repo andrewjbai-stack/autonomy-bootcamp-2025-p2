@@ -1,0 +1,5 @@
+15:44:04: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry_worker.py | telemetry_worker | 46] Logger initialized
+15:44:09: [ERROR] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry_worker.py | telemetry_worker | 68] attitude and position data has been missing for more than one second
+15:44:10: [ERROR] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry_worker.py | telemetry_worker | 68] attitude and position data has been missing for more than one second
+15:44:11: [ERROR] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry_worker.py | telemetry_worker | 68] attitude and position data has been missing for more than one second
+15:44:17: [ERROR] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry_worker.py | telemetry_worker | 68] attitude and position data has been missing for more than one second

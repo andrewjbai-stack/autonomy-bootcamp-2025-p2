@@ -1,6 +1,6 @@
-18:02:58: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\common\modules\logger\logger_main_setup.py | setup_main_logger | 62] main logger initialized
-18:02:58: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | main | 110] Connected!
-18:02:58: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:03: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\modules\common\modules\logger\logger_main_setup.py | setup_main_logger | 62] main logger initialized
+15:44:04: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | main | 110] Connected!
+15:44:04: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 0,
             x: 0.0,
             y: 0.0,
@@ -15,7 +15,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:02:59: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:04: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 500,
             x: 0.5,
             y: 0.0,
@@ -30,7 +30,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:02:59: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:05: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 1000,
             x: 1.0,
             y: 0.0,
@@ -45,7 +45,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:03:00: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:05: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 1500,
             x: 1.5,
             y: 0.0,
@@ -60,7 +60,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:03:00: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:06: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 2000,
             x: 2.0,
             y: 0.0,
@@ -75,7 +75,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:03:01: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:06: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 2500,
             x: 2.5,
             y: 0.0,
@@ -90,7 +90,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:03:01: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:07: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 3000,
             x: 3.0,
             y: 0.0,
@@ -105,7 +105,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:03:02: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:07: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 3500,
             x: 3.5,
             y: 0.0,
@@ -120,7 +120,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:03:02: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:08: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 4000,
             x: 4.0,
             y: 0.0,
@@ -135,7 +135,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:03:03: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:08: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 4500,
             x: 4.5,
             y: 0.0,
@@ -150,7 +150,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:03:06: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:12: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 0,
             x: 0.0,
             y: 0.0,
@@ -165,7 +165,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:03:07: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:12: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 500,
             x: 0.3333333432674408,
             y: 0.0,
@@ -180,7 +180,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:03:07: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:13: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 1000,
             x: 0.6666666865348816,
             y: 0.0,
@@ -195,7 +195,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:03:08: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:13: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 1500,
             x: 1.3333333730697632,
             y: 0.0,
@@ -210,7 +210,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:03:08: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:14: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 2000,
             x: 1.6666666269302368,
             y: 0.0,
@@ -225,7 +225,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:03:09: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:14: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 2500,
             x: 2.3333332538604736,
             y: 0.0,
@@ -240,7 +240,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:03:09: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:15: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 3000,
             x: 2.6666667461395264,
             y: 0.0,
@@ -255,7 +255,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:03:10: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:15: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 3500,
             x: 3.3333332538604736,
             y: 0.0,
@@ -270,7 +270,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:03:10: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:16: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 4000,
             x: 3.6666667461395264,
             y: 0.0,
@@ -285,7 +285,7 @@
             pitch_speed: 0.0,
             yaw_speed: 3.1415927410125732
         }
-18:03:11: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
+15:44:16: [INFO] [C:\Users\Andre\Desktop\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_telemetry.py | read_queue | 67] {
             time_since_boot: 4500,
             x: 4.333333492279053,
             y: 0.0,

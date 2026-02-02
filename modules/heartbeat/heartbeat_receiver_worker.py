@@ -21,7 +21,7 @@ from ..common.modules.logger import logger
 
 def heartbeat_receiver_worker(
     connection: mavutil.mavfile,
-    output_queue: queue_proxy_wrapper.queue,
+    output_queue: queue_proxy_wrapper.QueueProxyWrapper,
     controller: worker_controller.WorkerController,
 ) -> None:
     """
@@ -62,9 +62,10 @@ def heartbeat_receiver_worker(
     while not controller.is_exit_requested():
         message = hb_receiver.run()
         if message is not None:
-            output_queue.put("Connected")
+            num_missed = 0
+            output_queue.queue.put("Connected")
         elif message is None:
-            output_queue.put("Disconnected")
+            output_queue.queue.put("Disconnected")
 
             num_missed += 1
             local_logger.error(f"{num_missed} Heartbeats from Drone Missed!!!")

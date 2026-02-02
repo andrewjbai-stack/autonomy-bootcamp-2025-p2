@@ -76,9 +76,13 @@ class Command:  # pylint: disable=too-many-instance-attributes
         self.total_velocity.y += telemetry_data.y_velocity
         self.total_velocity.z += telemetry_data.z_velocity
 
+        self.local_logger.info(
+            f"Current Velocity: {self.total_velocity.x/self.num_of_runs}, {self.total_velocity.y/self.num_of_runs}, {self.total_velocity.z/self.num_of_runs}"
+        )
+
         # Checking vertical (z) difference
         dz = telemetry_data.z - self.target.z
-        if dz >= 0.5 or dz <= -0.5:
+        if abs(dz) >= 0.5:
             self.connection.mav.command_long_send(
                 1,
                 0,
